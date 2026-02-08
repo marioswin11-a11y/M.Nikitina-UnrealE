@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "AbilitySystemInterface.h"
 #include "UE_NEW_NikitinaMCharacter.generated.h"
 
 class USpringArmComponent;
@@ -12,11 +13,12 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UAbilitySystemComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class AUE_NEW_NikitinaMCharacter : public ACharacter
+class AUE_NEW_NikitinaMCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -46,9 +48,13 @@ class AUE_NEW_NikitinaMCharacter : public ACharacter
 
 public:
 	AUE_NEW_NikitinaMCharacter();
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
 
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
