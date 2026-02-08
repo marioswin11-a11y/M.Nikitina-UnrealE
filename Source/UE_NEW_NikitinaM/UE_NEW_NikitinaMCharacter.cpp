@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "AbilitySystemComponent.h"
+#include "GA_Test.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -80,8 +81,32 @@ void AUE_NEW_NikitinaMCharacter::BeginPlay()
 	if (AbilitySystemComponent)
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+
+		if (HasAuthority())
+		{
+			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(UGA_Test::StaticClass(), 1, 0));
+			
+		}
+
 	}
 }
+	
+	
+	
+	
+
+
+
+	
+	  
+
+
+	
+	
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -100,6 +125,9 @@ void AUE_NEW_NikitinaMCharacter::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUE_NEW_NikitinaMCharacter::Look);
+
+		// Abilities 
+		EnhancedInputComponent->BindAction(AbilityTestAction, ETriggerEvent::Started, this, &AUE_NEW_NikitinaMCharacter::AbilityTestPressed);
 	}
 	else
 	{
@@ -140,5 +168,13 @@ void AUE_NEW_NikitinaMCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void AUE_NEW_NikitinaMCharacter::AbilityTestPressed()
+{
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->TryActivateAbilityByClass(UGA_Test::StaticClass());
 	}
 }

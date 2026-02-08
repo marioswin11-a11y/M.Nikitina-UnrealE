@@ -8,6 +8,7 @@
 #include "AbilitySystemInterface.h"
 #include "UE_NEW_NikitinaMCharacter.generated.h"
 
+
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
@@ -45,10 +46,15 @@ class AUE_NEW_NikitinaMCharacter : public ACharacter, public IAbilitySystemInter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
+	
+	// Abilities Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<class UInputAction> AbilityTestAction;
 
 public:
 	AUE_NEW_NikitinaMCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
 	
 
 protected:
@@ -61,6 +67,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	void AbilityTestPressed();
 			
 
 protected:
