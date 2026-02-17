@@ -57,6 +57,8 @@ AUE_NEW_NikitinaMCharacter::AUE_NEW_NikitinaMCharacter()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
+
+	AttributeSet = CreateDefaultSubobject<UNM_AttributeSet>(TEXT("AttributeSet"));
 }
 
 UAbilitySystemComponent* AUE_NEW_NikitinaMCharacter::GetAbilitySystemComponent() const
@@ -91,7 +93,21 @@ void AUE_NEW_NikitinaMCharacter::BeginPlay()
 
 	}
 }
-	
+float AUE_NEW_NikitinaMCharacter::GetHealth() const
+{
+	return AttributeSet ? AttributeSet->GetHealth() : 0.0f;
+}
+
+float AUE_NEW_NikitinaMCharacter::GetMaxHealth() const
+{
+	return AttributeSet ? AttributeSet->GetMaxHealth() : 1.0f;
+}
+
+float AUE_NEW_NikitinaMCharacter::GetHealthNormalized() const
+{
+	const float Max = GetMaxHealth();
+	return (Max > 0.0f) ? (GetHealth() / Max) : 0.0f;
+}
 	
 	
 	

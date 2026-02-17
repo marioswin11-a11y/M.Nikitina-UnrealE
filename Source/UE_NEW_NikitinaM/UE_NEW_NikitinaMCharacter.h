@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "AbilitySystemInterface.h"
+#include "NM_AttributeSet.h"
 #include "UE_NEW_NikitinaMCharacter.generated.h"
 
 
@@ -55,6 +56,15 @@ public:
 	AUE_NEW_NikitinaMCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	UFUNCTION(BlueprintPure, Category = "GAS|Attributes")
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintPure, Category = "GAS|Attributes")
+	float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintPure, Category = "GAS|Attributes")
+	float GetHealthNormalized() const;
+
 	
 
 protected:
@@ -69,6 +79,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	void AbilityTestPressed();
+
+	UPROPERTY()
+	TObjectPtr<UNM_AttributeSet> AttributeSet;
 			
 
 protected:
