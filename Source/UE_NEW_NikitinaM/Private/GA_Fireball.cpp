@@ -5,6 +5,7 @@
 #include "Engine/Engine.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "Engine/World.h"
 
 void UGA_Fireball::ActivateAbility(
@@ -22,6 +23,12 @@ void UGA_Fireball::ActivateAbility(
         EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
         return;
     }
+
+	ACharacter* Character = Cast<ACharacter>(Avatar);
+    if (Character && CastMontage)
+    {
+        Character->PlayAnimMontage(CastMontage);
+	}
 
     UWorld* World = Avatar->GetWorld();
     if (!World)

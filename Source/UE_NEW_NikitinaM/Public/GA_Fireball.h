@@ -27,4 +27,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fireball")
 	TSubclassOf<AActor> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Fireball")
+	UAnimMontage* CastMontage = nullptr;
+	
+
 };
