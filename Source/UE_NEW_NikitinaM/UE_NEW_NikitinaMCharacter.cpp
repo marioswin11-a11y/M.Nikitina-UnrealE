@@ -12,6 +12,7 @@
 #include "InputActionValue.h"
 #include "AbilitySystemComponent.h"
 #include "GA_Test.h"
+#include "GA_Fireball.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -89,9 +90,17 @@ void AUE_NEW_NikitinaMCharacter::BeginPlay()
 		{
 			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(UGA_Test::StaticClass(), 1, 0));
 			
+			
 		}
-
+		if (HasAuthority() && AbilitySystemComponent && FireballAbilityClass)
+		{
+			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(FireballAbilityClass, 1, 0));
+		}
+		
 	}
+
+
+
 }
 float AUE_NEW_NikitinaMCharacter::GetHealth() const
 {
@@ -144,6 +153,7 @@ void AUE_NEW_NikitinaMCharacter::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Abilities 
 		EnhancedInputComponent->BindAction(AbilityTestAction, ETriggerEvent::Started, this, &AUE_NEW_NikitinaMCharacter::AbilityTestPressed);
+		EnhancedInputComponent->BindAction(FireballAction, ETriggerEvent::Started, this, &AUE_NEW_NikitinaMCharacter::FireballPressed);
 	}
 	else
 	{
@@ -193,4 +203,11 @@ void AUE_NEW_NikitinaMCharacter::AbilityTestPressed()
 	{
 		AbilitySystemComponent->TryActivateAbilityByClass(UGA_Test::StaticClass());
 	}
+}
+void AUE_NEW_NikitinaMCharacter::FireballPressed()
+{
+	if (!AbilitySystemComponent) return;
+	
+	AbilitySystemComponent->TryActivateAbilityByClass(FireballAbilityClass);
+	
 }

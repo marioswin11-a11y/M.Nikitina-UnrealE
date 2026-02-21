@@ -52,6 +52,9 @@ class AUE_NEW_NikitinaMCharacter : public ACharacter, public IAbilitySystemInter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<class UInputAction> AbilityTestAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> FireballAction;
+
 public:
 	AUE_NEW_NikitinaMCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -72,6 +75,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "GAS")
+	TSubclassOf<UGameplayAbility> FireballAbilityClass;
+
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
@@ -79,6 +85,8 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	void AbilityTestPressed();
+
+	void FireballPressed();
 
 	UPROPERTY()
 	TObjectPtr<UNM_AttributeSet> AttributeSet;
