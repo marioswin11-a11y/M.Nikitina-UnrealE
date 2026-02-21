@@ -14,22 +14,22 @@ void UGA_Fireball::ActivateAbility(
     const FGameplayAbilityActivationInfo ActivationInfo,
     const FGameplayEventData* TriggerEventData)
 {
-    
+
 
     AActor* Avatar = (ActorInfo && ActorInfo->AvatarActor.IsValid()) ? ActorInfo->AvatarActor.Get() : nullptr;
-    
+
     if (!Avatar || !ProjectileClass)
     {
         EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
         return;
     }
 
-	ACharacter* Character = Cast<ACharacter>(Avatar);
+    ACharacter* Character = Cast<ACharacter>(Avatar);
     if (Character && CastMontage)
     {
         Character->PlayAnimMontage(CastMontage);
-	}
-
+    }
+    /*
     UWorld* World = Avatar->GetWorld();
     if (!World)
     {
@@ -45,6 +45,7 @@ void UGA_Fireball::ActivateAbility(
     Params.Instigator = Cast<APawn>(Avatar);
 
     World->SpawnActor<AActor>(ProjectileClass, SpawnLocation, SpawnRotation, Params);
-
+    */
     EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+    
 }

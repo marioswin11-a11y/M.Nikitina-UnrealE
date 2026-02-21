@@ -211,3 +211,23 @@ void AUE_NEW_NikitinaMCharacter::FireballPressed()
 	AbilitySystemComponent->TryActivateAbilityByClass(FireballAbilityClass);
 	
 }
+
+void AUE_NEW_NikitinaMCharacter::SpawnFireballFromHand(USkeletalMeshComponent* MeshComp)
+{
+	if (!MeshComp || !FireballProjectileClass) return;
+
+	
+	const FName HandBone = TEXT("hand_r");
+
+	const FVector HandLocation = MeshComp->GetBoneLocation(HandBone);
+	const FRotator SpawnRotation = GetActorRotation();
+
+	
+	const FVector SpawnLocation = HandLocation + GetActorForwardVector() * 20.f;
+
+	FActorSpawnParameters Params;
+	Params.Owner = this;
+	Params.Instigator = this;
+
+	GetWorld()->SpawnActor<AActor>(FireballProjectileClass, SpawnLocation, SpawnRotation, Params);
+}

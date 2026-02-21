@@ -7,6 +7,8 @@
 #include "Logging/LogMacros.h"
 #include "AbilitySystemInterface.h"
 #include "NM_AttributeSet.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/World.h"
 #include "UE_NEW_NikitinaMCharacter.generated.h"
 
 
@@ -68,6 +70,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GAS|Attributes")
 	float GetHealthNormalized() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SpawnFireballFromHand(USkeletalMeshComponent* MeshComp);
 	
 
 protected:
@@ -77,6 +81,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "GAS")
 	TSubclassOf<UGameplayAbility> FireballAbilityClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Fireball")
+	TSubclassOf<AActor> FireballProjectileClass;
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
