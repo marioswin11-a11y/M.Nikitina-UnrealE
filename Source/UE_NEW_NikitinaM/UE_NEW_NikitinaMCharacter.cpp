@@ -252,3 +252,14 @@ void AUE_NEW_NikitinaMCharacter::OnHealthChanged(const FOnAttributeChangeData& D
 
 	
 }
+
+void AUE_NEW_NikitinaMCharacter::ResetAfterRespawn()
+{
+	bIsDead = false;
+	if (!AbilitySystemComponent) 
+	{	
+		return;
+    }
+	const float MaxHealthValue = AbilitySystemComponent->GetNumericAttribute(UNM_AttributeSet::GetMaxHealthAttribute());
+	AbilitySystemComponent->SetNumericAttributeBase(UNM_AttributeSet::GetHealthAttribute(), MaxHealthValue);
+}

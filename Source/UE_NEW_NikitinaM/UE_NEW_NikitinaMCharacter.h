@@ -80,6 +80,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Death")
 	void BP_OnDeathFromCode();
 
+	UFUNCTION(BlueprintCallable, Category = "Death")
+	void ResetAfterRespawn();
+
 	
 
 protected:
