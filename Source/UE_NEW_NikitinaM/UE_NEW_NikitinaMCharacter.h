@@ -7,6 +7,7 @@
 #include "Logging/LogMacros.h"
 #include "AbilitySystemInterface.h"
 #include "NM_AttributeSet.h"
+#include "GameplayEffectExtension.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/World.h"
 #include "UE_NEW_NikitinaMCharacter.generated.h"
@@ -72,6 +73,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireballFromHand(USkeletalMeshComponent* MeshComp);
+
+	
+	void OnHealthChanged(const FOnAttributeChangeData& Data);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Death")
+	void BP_OnDeathFromCode();
+
 	
 
 protected:
@@ -97,6 +105,9 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UNM_AttributeSet> AttributeSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, category = "Death")
+	bool bIsDead = false;
 			
 
 protected:

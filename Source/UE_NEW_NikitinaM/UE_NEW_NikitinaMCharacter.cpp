@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "AbilitySystemComponent.h"
+#include "NM_AttributeSet.h"
 #include "GA_Test.h"
 #include "GA_Fireball.h"
 
@@ -99,6 +100,10 @@ void AUE_NEW_NikitinaMCharacter::BeginPlay()
 		
 	}
 
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UNM_AttributeSet::GetHealthAttribute()).AddUObject(this, &AUE_NEW_NikitinaMCharacter::OnHealthChanged);
+	}
 
 
 }
@@ -230,4 +235,20 @@ void AUE_NEW_NikitinaMCharacter::SpawnFireballFromHand(USkeletalMeshComponent* M
 	Params.Instigator = this;
 
 	GetWorld()->SpawnActor<AActor>(FireballProjectileClass, SpawnLocation, SpawnRotation, Params);
+}
+
+void AUE_NEW_NikitinaMCharacter::OnHealthChanged(const FOnAttributeChangeData& Data)
+{
+	if (bIsDead)
+	{
+		return;
+	}
+	
+	if (Data.NewValue <= 0.0f)
+	{
+		bIsDead = true;
+		BP_OnDeathFromCode();
+	}
+
+	
 }
